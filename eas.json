@@ -5,7 +5,10 @@
     "preview": { "distribution": "internal" },
     "production": {
       "autoIncrement": true,
-      "android": { "buildType": "apk" }
+      "android": { "buildType": "apk" },
+      "env": {
+        "EXPO_PUBLIC_CONVEX_URL": "https://vibrant-bandicoot-628.convex.cloud"
+      }
     }
   },
   "submit": { "production": {} }
