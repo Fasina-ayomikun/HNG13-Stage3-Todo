@@ -1,24 +1,51 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+// app/_layout.tsx
+import { JosefinSans_700Bold, useFonts } from "@expo-google-fonts/josefin-sans";
+import {
+  DarkTheme as NavDarkTheme,
+  DefaultTheme as NavDefaultTheme,
+  ThemeProvider as NavThemeProvider,
+} from "@react-navigation/native";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { ActivityIndicator, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import "react-native-reanimated";
+import { useTheme } from "styled-components/native";
+import ConvexCtxProvider from "../providers/ConvexProvider";
+import AppThemeProvider from "../providers/ThemeProvider";
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+function NavBridge() {
+  const scTheme = useTheme(); // valid because AppThemeProvider wraps this
+  return (
+    <NavThemeProvider
+      value={scTheme.mode === "dark" ? NavDarkTheme : NavDefaultTheme}
+    >
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name='index' options={{ headerShown: false }} />
+      </Stack>
+      <StatusBar style={scTheme.mode === "dark" ? "light" : "dark"} />
+    </NavThemeProvider>
+  );
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const [fontsLoaded] = useFonts({ JosefinSans_700Bold });
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ConvexCtxProvider>
+        <AppThemeProvider>
+          <NavBridge />
+        </AppThemeProvider>
+      </ConvexCtxProvider>
+    </GestureHandlerRootView>
   );
 }
