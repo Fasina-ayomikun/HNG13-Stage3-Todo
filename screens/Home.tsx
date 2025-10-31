@@ -205,6 +205,10 @@ export default function Home() {
                         </Muted>
                       )}
                     </View>
+                  ) : (visibleTodos?.length ?? 0) === 0 ? (
+                    <View style={{ padding: 24, alignItems: "center" }}>
+                      <Muted>No todos yet. Add your first task.</Muted>
+                    </View>
                   ) : (
                     <DraggableFlatList
                       data={visibleTodos}
