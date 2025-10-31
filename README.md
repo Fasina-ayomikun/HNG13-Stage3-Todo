@@ -5,14 +5,6 @@ Includes **dark/light theming**, **drag-to-reorder**, and **persistent preferenc
 
 ---
 
-## **Preview**
-
-| Light Theme                                             | Dark Theme                                             |
-| ------------------------------------------------------- | ------------------------------------------------------ |
-| <img src="./assets/screenshots/light.png" width="250"/> | <img src="./assets/screenshots/dark.png" width="250"/> |
-
----
-
 ## **Features**
 
 - **Pixel-perfect UI** (faithful to Figma)
